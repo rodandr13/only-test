@@ -1,0 +1,60 @@
+@use './normalize';
+
+@font-face {
+  font-family: 'PTSans';
+  src: url('../assets/fonts/PTSans-Bold.woff2') format('woff2');
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PTSans';
+  src: url('../assets/fonts/PTSans-Regular.woff2') format('woff2');
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BebasNeue';
+  src: url('../assets/fonts/BebasNeue-Regular.woff2') format('woff2');
+  font-style: normal;
+  font-display: swap;
+}
+
+html, body {
+  font-size: 16px;
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  min-width: 320px;
+  font-family: 'PTSans', sans-serif;
+  color: var(--black-blue);
+  background-color: var(--light-gray-blue);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  height: 100%;
+}
+
+:root {
+  --breakpoint-sm: 580px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1200px;
+
+  --black-blue: rgba(66, 86, 122, 1);
+  --iris-100: rgba(93, 95, 239, 1);
+  --fuschia-100: rgba(239, 93, 168, 1);
+  --white: rgba(255, 255, 255, 1);
+  --blue: rgba(56, 119, 238, 1);
+  --light-gray-blue: rgba(244, 245, 249, 1);
+  --border-light-gray: rgba(66, 86, 122, 0.1);
+  --border-gray: rgba(66, 86, 122, 0.5);
+  --border-gray-2: rgba(199, 205, 217, 1);
+  --shadow-gray: rgba(56, 119, 238, 0.1);
+}

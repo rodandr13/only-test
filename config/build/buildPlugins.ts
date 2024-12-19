@@ -10,6 +10,7 @@ export const buildPlugins = ({
   return [
     new HTMLWebpackPlugin({
       template: paths.html,
+      favicon: false,
     }),
     new webpack.ProgressPlugin(),
     new MiniCssExtractPlugin({

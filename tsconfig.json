@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./build/",
+    "baseUrl": "./src",
     "noImplicitAny": true,
     "module": "ESNext",
     "target": "es5",

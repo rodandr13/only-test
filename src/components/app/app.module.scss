@@ -1,0 +1,116 @@
+.app {
+  position: relative;
+  max-width: 1440px;
+  max-height: 1000px;
+  min-height: 730px;
+  min-width: 320px;
+  overflow: hidden;
+  margin: 0 auto;
+  border-left: 1px solid var(--border-light-gray);
+  border-right: 1px solid var(--border-light-gray);
+  background:
+          linear-gradient(to bottom, var(--border-light-gray), var(--border-light-gray)) center / 1px 100% no-repeat;
+  height: 100%;
+}
+
+.app__title {
+  margin: 0 0 0 0;
+  padding: 0 0 0 80px;
+  font-size: 56px;
+  line-height: 1.2;
+  position: absolute;
+  left: 0;
+  bottom: -100px;
+  font-weight: 700;
+  max-width: 353px;
+  width: 100%;
+}
+
+.app__title::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--blue), var(--fuschia-100));
+}
+
+.layout {
+  display: grid;
+  height: 100%;
+  grid-template-columns: 1fr;
+  grid-template-rows: 0.3fr 1.8fr 0.9fr;
+  gap: 0;
+}
+
+.header {
+  position: relative;
+}
+
+.dates {
+  position: relative;
+  background: linear-gradient(to right, var(--border-light-gray), var(--border-light-gray)) center / 100% 1px no-repeat;
+}
+
+.events {
+  padding-top: 60px;
+  overflow: hidden;
+}
+
+
+@media screen and (max-width: var(--breakpoint-xl)) {
+  .app__title {
+    font-size: 42px;
+    bottom: -80px;
+  }
+  .layout {
+    grid-template-rows: 0.3fr 1.8fr 1.1fr;
+  }
+}
+
+@media screen and (max-width: var(--breakpoint-lg)) {
+  .app__title {
+    font-size: 34px;
+    max-width: 280px;
+    bottom: -60px;
+    padding: 0 0 0 40px;
+  }
+  .layout {
+    grid-template-rows: 0.3fr 1.8fr 1.3fr;
+  }
+}
+
+@media screen and (max-width: var(--breakpoint-md)) {
+  .app__title {
+    font-size: 20px;
+    max-width: 160px;
+    padding: 0 0 0 20px;
+    bottom: -40px;
+  }
+  .layout {
+    grid-template-rows: 0.3fr 1.8fr 1.5fr;
+  }
+}
+
+@media screen and (max-width: var(--breakpoint-sm)) {
+  .app {
+    min-height: 568px;
+    background: none;
+    border: none;
+  }
+  .app__title {
+    margin: 60px 0;
+    position: static;
+    &::before {
+      background: none;
+    }
+  }
+  .layout {
+    grid-template-rows: 0.3fr 0.5fr 2fr;
+  }
+  .dates {
+    position: static;
+    background: none;
+  }
+}

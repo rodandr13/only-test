@@ -1,0 +1,125 @@
+.years {
+  font-size: 200px;
+  font-weight: 700;
+  line-height: 160px;
+  text-align: center;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+  margin: 0 auto;
+  max-width: 973px;
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.years__start {
+  color: var(--iris-100);
+  letter-spacing: -0.02em;
+}
+.years__end {
+  color: var(--fuschia-100);
+  letter-spacing: -0.02em;
+}
+
+.circle {
+  width: 530px;
+  height: 530px;
+  border-radius: 50%;
+  border: 1px solid var(--border-gray);
+  opacity: 0.2;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.controls {
+  position: absolute;
+  left: 80px;
+  bottom: 0;
+}
+.numberSlides {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18.12px;
+  text-align: left;
+}
+.buttons {
+  margin: 20px 0 0 0;
+  display: flex;
+  gap: 20px;
+}
+
+@media screen and (max-width: var(--breakpoint-xl)) {
+  .years {
+    font-size: 150px;
+    line-height: 120px;
+  }
+  .circle {
+    width: 430px;
+    height: 430px;
+  }
+  .controls {
+    bottom: 30px;
+  }
+}
+
+@media screen and (max-width: var(--breakpoint-lg)) {
+  .years {
+    font-size: 120px;
+    line-height: 90px;
+  }
+  .circle {
+    width: 370px;
+    height: 370px;
+  }
+  .controls {
+    bottom: 25px;
+    left: 40px;
+  }
+}
+
+@media screen and (max-width: var(--breakpoint-md)) {
+  .years {
+    font-size: 90px;
+    line-height: 60px;
+  }
+  .circle {
+    width: 300px;
+    height: 300px;
+  }
+  .controls {
+    bottom: 40px;
+    left: 20px;
+  }
+}
+
+@media screen and (max-width: var(--breakpoint-sm)) {
+  .years {
+    font-size: 56px;
+    line-height: 72px;
+    position: static;
+    transform: none;
+    gap: 40px;
+  }
+  .controls {
+    bottom: 13px;
+    left: 20px;
+  }
+  .buttons {
+    margin: 10px 0 0 0;
+    gap: 8px;
+  }
+  .circle {
+    display: none;
+    //width: 230px;
+    //height: 230px;
+  }
+}
+
+
