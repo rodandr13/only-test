@@ -1,3 +1,5 @@
+@use '../../styles/variables' as v;
+
 .button {
   margin: 0;
   padding: 0;
@@ -45,14 +47,14 @@
 }
 
 
-@media screen and (max-width: var(--breakpoint-lg)) {
+@media screen and (max-width: v.$breakpoint-lg) {
   .buttonControl {
     width: 40px;
     height: 40px;
   }
 }
 
-@media screen and (max-width: var(--breakpoint-sm)) {
+@media screen and (max-width: v.$breakpoint-sm) {
   .buttonControl {
     width: 30px;
     height: 30px;

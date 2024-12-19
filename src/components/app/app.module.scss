@@ -1,3 +1,5 @@
+@use '../../styles/variables' as v;
+
 .app {
   position: relative;
   max-width: 1440px;
@@ -59,7 +61,7 @@
 }
 
 
-@media screen and (max-width: var(--breakpoint-xl)) {
+@media screen and (max-width: v.$breakpoint-xl) {
   .app__title {
     font-size: 42px;
     bottom: -80px;
@@ -69,7 +71,7 @@
   }
 }
 
-@media screen and (max-width: var(--breakpoint-lg)) {
+@media screen and (max-width: v.$breakpoint-lg) {
   .app__title {
     font-size: 34px;
     max-width: 280px;
@@ -81,7 +83,7 @@
   }
 }
 
-@media screen and (max-width: var(--breakpoint-md)) {
+@media screen and (max-width: v.$breakpoint-md) {
   .app__title {
     font-size: 20px;
     max-width: 160px;
@@ -93,7 +95,7 @@
   }
 }
 
-@media screen and (max-width: var(--breakpoint-sm)) {
+@media screen and (max-width: v.$breakpoint-sm) {
   .app {
     min-height: 568px;
     background: none;

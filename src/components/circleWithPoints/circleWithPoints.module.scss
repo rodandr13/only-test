@@ -1,0 +1,132 @@
+@use '../../styles/variables' as v;
+
+.circle {
+  width: 530px;
+  height: 530px;
+  border-radius: 50%;
+  border: 1px solid var(--border-circle-gray);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.pointsContainer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  transform: translate(-50%, -50%);
+}
+
+.point {
+  box-sizing: border-box;
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--black-blue);
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid transparent;
+  transition: width 0.2s ease-in, height 0.2s ease-in, background 0.2s ease-in, border-color 0.2s ease-in;
+  &:hover {
+    width: 56px;
+    height: 56px;
+    background: var(--light-gray-blue);
+    border-color: var(--border-gray);
+    & .pointNumber {
+      opacity: 1;
+    }
+  }
+  ::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50px;
+    height: 50px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background-color: transparent;
+    pointer-events: all;
+  }
+
+  &_active {
+    width: 56px;
+    height: 56px;
+    background: var(--light-gray-blue);
+    border-color: var(--border-gray);
+
+    & .pointNumber {
+      opacity: 1;
+    }
+  }
+}
+
+.pointNumber {
+  position: absolute;
+  user-select: none;
+  pointer-events: none;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 30px;
+  text-align: left;
+  opacity: 0;
+  display: block;
+  transition: opacity 0.2s ease-in;
+}
+
+.pointTitle {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 30px;
+  text-align: left;
+  margin: 0;
+  position: absolute;
+  right: -80px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  &_active {
+    opacity: 1;
+    transition: opacity 0.2s ease-in;
+  }
+}
+
+@media screen and (max-width: v.$breakpoint-xl) {
+  .circle {
+    width: 430px;
+    height: 430px;
+  }
+}
+
+@media screen and (max-width: v.$breakpoint-lg) {
+  .circle {
+    width: 370px;
+    height: 370px;
+  }
+}
+
+@media screen and (max-width: v.$breakpoint-md) {
+  .circle {
+    width: 300px;
+    height: 300px;
+  }
+}
+
+@media screen and (max-width: v.$breakpoint-sm) {
+  .circle {
+    display: none;
+    //width: 230px;
+    //height: 230px;
+  }
+}
