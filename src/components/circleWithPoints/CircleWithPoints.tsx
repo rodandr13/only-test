@@ -1,13 +1,15 @@
-import { useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { gsap } from "gsap";
 
 import styles from "./circleWithPoints.module.scss";
-import useResponsiveRadius from "./useResponsiveRadius";
+import { TimeInterval } from "../../__mocks/types";
+import useResponsiveRadius from "../../hooks/useResponsiveRadius";
 
 interface CircleWithPointsProps {
-  pointsCount?: number;
-  defaultRadius?: number;
+  timeIntervals: TimeInterval[];
+  setActiveIndex: (index: number) => void;
+  activeIndex: number;
 }
 
 const getCSSVariable = (variable: string): number => {
@@ -18,9 +20,13 @@ const getCSSVariable = (variable: string): number => {
 };
 
 export const CircleWithPoints = ({
-  pointsCount = 6,
-  defaultRadius = 265,
+  timeIntervals,
+  setActiveIndex,
+  activeIndex,
 }: CircleWithPointsProps) => {
+  const pointsCount = timeIntervals.length;
+  const defaultRadius = 265;
+
   const breakpoints = useMemo(
     () => ({
       sm: getCSSVariable("--breakpoint-sm"),
@@ -30,15 +36,13 @@ export const CircleWithPoints = ({
     }),
     []
   );
-
   const radius = useResponsiveRadius(breakpoints, defaultRadius);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
-  const offset = 30;
-
-  const [activeIndex, setActiveIndex] = useState(0);
   const [isRotating, setIsRotating] = useState(true);
+
+  const offset = 30;
 
   const angles = useMemo(
     () =>
@@ -46,33 +50,30 @@ export const CircleWithPoints = ({
     [pointsCount]
   );
 
-  const points = useMemo(
-    () =>
-      angles.map((angle, i) => {
-        const angleRad = (angle * Math.PI) / 180;
-        const x = radius * Math.sin(angleRad);
-        const y = -radius * Math.cos(angleRad);
-        return { x, y, index: i };
-      }),
-    [angles, radius]
-  );
+  const points = useMemo(() => {
+    return angles.map((angle, i) => {
+      const angleRad = (angle * Math.PI) / 180;
+      const x = radius * Math.sin(angleRad);
+      const y = -radius * Math.cos(angleRad);
+      return { x, y, index: i };
+    });
+  }, [angles, radius]);
 
   const rotateToIndex = useCallback(
-    (clickedIndex: number): number => {
+    (idx: number) => {
       const anglePerPoint = 360 / pointsCount;
-      return offset - anglePerPoint * clickedIndex;
+      return offset - anglePerPoint * idx;
     },
     [pointsCount, offset]
   );
 
-  const handleClick = useCallback(
+  const rotateCircle = useCallback(
     (index: number) => {
-      setActiveIndex(index);
-      setIsRotating(false);
-      const targetRotation = rotateToIndex(index);
-
       if (!wrapperRef.current) return;
 
+      setIsRotating(false);
+
+      const targetRotation = rotateToIndex(index);
       const pointsElements =
         wrapperRef.current.querySelectorAll("[data-point]");
 
@@ -109,9 +110,22 @@ export const CircleWithPoints = ({
     [rotateToIndex]
   );
 
-  useLayoutEffect(() => {
-    if (!wrapperRef.current) return;
+  const handleClick = useCallback(
+    (index: number) => {
+      setActiveIndex(index);
+      rotateCircle(index);
+    },
+    [setActiveIndex, rotateCircle]
+  );
 
+  useEffect(() => {
+    if (activeIndex !== undefined && activeIndex !== null) {
+      rotateCircle(activeIndex);
+    }
+  }, [activeIndex, rotateCircle]);
+
+  useEffect(() => {
+    if (!wrapperRef.current) return;
     gsap.set(wrapperRef.current, { rotation: offset });
 
     const pointsElements = wrapperRef.current.querySelectorAll("[data-point]");
@@ -127,11 +141,10 @@ export const CircleWithPoints = ({
               key={index}
               data-point
               onClick={() => handleClick(index)}
-              className={`${styles.point} ${activeIndex === index ? styles.pointActive : ""}`}
-              style={{
-                left: `${x}px`,
-                top: `${y}px`,
-              }}
+              className={`${styles.point} ${
+                activeIndex === index ? styles.pointActive : ""
+              }`}
+              style={{ left: `${x}px`, top: `${y}px` }}
               role="button"
               aria-pressed={activeIndex === index}
               tabIndex={0}
@@ -142,13 +155,15 @@ export const CircleWithPoints = ({
               }}
             >
               <span className={styles.pointNumber}>{index + 1}</span>
-              {activeIndex === index && isRotating && (
-                <p
-                  className={`${styles.pointTitle} ${styles.pointTitleActive}`}
-                >
-                  Наука
-                </p>
-              )}
+              <p
+                className={`${styles.pointTitle} ${
+                  activeIndex === index && isRotating
+                    ? styles.pointTitleActive
+                    : ""
+                }`}
+              >
+                {timeIntervals[index].name}
+              </p>
             </div>
           ))}
         </div>
