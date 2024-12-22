@@ -48,6 +48,25 @@
   gap: 20px;
 }
 
+.bullets {
+  display: none;
+  max-width: 86px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.bullet {
+  background: var(--border-gray);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+
+  &_active {
+    background: var(--black-blue);
+  }
+}
+
 @media screen and (max-width: v.$breakpoint-xl) {
   .years {
     font-size: 150px;
@@ -112,6 +131,13 @@
     display: none;
     //width: 230px;
     //height: 230px;
+  }
+  .bullets {
+    display: flex;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 37px;
   }
 }
 

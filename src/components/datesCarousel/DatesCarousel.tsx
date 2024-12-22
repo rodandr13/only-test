@@ -18,6 +18,9 @@ export const DatesCarousel = ({
   setActiveIndex,
   activeIndex,
 }: DatesCarouselProps) => {
+  const currentInterval = activeIndex + 1;
+  const countIntervals = timeIntervals.length;
+
   return (
     <section>
       <CircleWithPoints
@@ -27,19 +30,35 @@ export const DatesCarousel = ({
       />
       <YearsInterval activeYears={activeYears} />
       <div className={styles.controls}>
-        <div className={styles.numberSlides}>06/06</div>
+        <div className={styles.numberSlides}>
+          {`${currentInterval.toString().padStart(2, "0")}/${countIntervals
+            .toString()
+            .padStart(2, "0")}`}
+        </div>
         <div className={styles.buttons}>
           <ButtonControl
             direction="prev"
             variant="outline"
-            onClick={() => setActiveIndex(activeIndex - 1)}
+            onClick={() => setActiveIndex(Math.max(0, activeIndex - 1))}
           />
           <ButtonControl
             direction="next"
             variant="outline"
-            onClick={() => setActiveIndex(activeIndex + 1)}
+            onClick={() =>
+              setActiveIndex(Math.min(countIntervals - 1, activeIndex + 1))
+            }
           />
         </div>
+      </div>
+      <div className={styles.bullets}>
+        {timeIntervals.map((_, index) => (
+          <div
+            key={`bullet-${index}`}
+            className={`${styles.bullet} ${
+              index === activeIndex ? styles.bulletActive : ""
+            }`}
+          ></div>
+        ))}
       </div>
     </section>
   );
