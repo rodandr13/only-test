@@ -9,7 +9,7 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
-  min-width: 320px;
+  //min-width: 320px;
   scroll-snap-align: start;
 }
 
@@ -31,30 +31,27 @@
 }
 
 .eventsContainer {
-  max-width: calc(100% - 160px);
-  width: 100%;
-  margin: 0 auto;
-  position: relative;
   overflow: hidden;
-  overflow-x: scroll;
-  overscroll-behavior: contain;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  padding: 0 0 5px;
-  display: flex;
-  gap: 80px;
+  max-width: calc(100% - 160px);
+  margin: 0 auto;
 }
 .controlButtons {
   width: 100%;
   position: absolute;
   top: 65px;
   left: 0;
+  z-index: 1;
 }
 
-.controlButtons__prev {
+.controlButtonsPrev {
   position: absolute;
   left: 15px;
   top: -30px;
+}
+
+:global(.swiper-button-disabled) {
+  opacity: 0;
+  visibility: hidden;
 }
 
 .controlButtons__next {
@@ -63,10 +60,15 @@
   top: -30px;
 }
 
+.swiper-button-disabled {
+  visibility: hidden;
+}
+
+
 
 @media screen and (max-width: v.$breakpoint-xl) {
   .eventsItem {
-    min-width: 260px;
+    //min-width: 260px;
   }
   .eventsContainer {
     gap: 60px;
@@ -84,7 +86,7 @@
     margin: 0;
   }
   .eventsItem {
-    min-width: 166px;
+    //min-width: 166px;
   }
   .eventsContainer {
     border-top: 1px solid var(--border-gray-2);

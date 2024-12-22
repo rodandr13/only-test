@@ -4,13 +4,22 @@ import webpack from "webpack";
 import { BuildOptions } from "./types/config";
 
 export const buildLoaders = ({
-  paths,
   isDev,
 }: BuildOptions): webpack.RuleSetRule[] => {
   const typeScriptLoader = {
     test: /\.tsx?$/,
     use: "ts-loader",
     exclude: /node_modules/,
+  };
+
+  const cssLoader = {
+    test: /\.css$/i,
+    use: [
+      isDev ? "style-loader" : MiniCssExtractPlugin.loader,
+      {
+        loader: "css-loader",
+      },
+    ],
   };
 
   const scssLoader = {
@@ -40,5 +49,5 @@ export const buildLoaders = ({
     ],
   };
 
-  return [fileLoader, typeScriptLoader, scssLoader];
+  return [fileLoader, typeScriptLoader, cssLoader, scssLoader];
 };

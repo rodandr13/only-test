@@ -1,9 +1,9 @@
 import styles from "./datesCarousel.module.scss";
 import { TimeInterval } from "../../__mocks/types";
+import { ActiveYears } from "../../types";
 import { ButtonControl } from "../buttonControl/ButtonControl";
 import { CircleWithPoints } from "../circleWithPoints/CircleWithPoints";
 import { YearsInterval } from "../yearsInterval/YearsInterval";
-import { ActiveYears } from "../../types";
 
 interface DatesCarouselProps {
   timeIntervals: TimeInterval[];

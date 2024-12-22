@@ -54,7 +54,10 @@ export const App = () => {
           />
         </div>
         <div className={styles.events}>
-          <EventsSlider />
+          <EventsSlider
+            activeIndex={activeIndex}
+            timeIntervals={data.timeIntervals}
+          />
         </div>
       </div>
     </div>
