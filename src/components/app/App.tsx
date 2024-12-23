@@ -1,11 +1,21 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 
 import styles from "./app.module.scss";
 import { fetchMockData } from "../../__mocks/fetchMockdata";
 import { MockData } from "../../__mocks/types";
 import { ActiveYears } from "../../types";
-import { DatesCarousel } from "../datesCarousel/DatesCarousel";
-import { EventsSlider } from "../eventsSlider/EventsSlider";
+
+const DatesCarousel = lazy(() =>
+  import("../datesCarousel/DatesCarousel").then((module) => ({
+    default: module.DatesCarousel,
+  }))
+);
+
+const EventsSlider = lazy(() =>
+  import("../eventsSlider/EventsSlider").then((module) => ({
+    default: module.EventsSlider,
+  }))
+);
 
 export const App = () => {
   const [data, setData] = useState<MockData | null>(null);
@@ -17,7 +27,7 @@ export const App = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetchMockData({ latency: 1000 });
+      const response = await fetchMockData({ latency: 0 });
       setData(response);
       if (response.timeIntervals.length > 0) {
         const { start, end } = response.timeIntervals[0];
@@ -46,18 +56,22 @@ export const App = () => {
           <h1 className={styles.appTitle}>Исторические даты</h1>
         </div>
         <div className={styles.dates}>
-          <DatesCarousel
-            activeYears={activeYears}
-            timeIntervals={data.timeIntervals}
-            setActiveIndex={setActiveIndex}
-            activeIndex={activeIndex}
-          />
+          <Suspense fallback={<div>Загрузка</div>}>
+            <DatesCarousel
+              activeYears={activeYears}
+              timeIntervals={data.timeIntervals}
+              setActiveIndex={setActiveIndex}
+              activeIndex={activeIndex}
+            />
+          </Suspense>
         </div>
         <div className={styles.events}>
-          <EventsSlider
-            activeIndex={activeIndex}
-            timeIntervals={data.timeIntervals}
-          />
+          <Suspense fallback={<div>Загрузка</div>}>
+            <EventsSlider
+              activeIndex={activeIndex}
+              timeIntervals={data.timeIntervals}
+            />
+          </Suspense>
         </div>
       </div>
     </div>

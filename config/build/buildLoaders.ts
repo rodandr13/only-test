@@ -40,14 +40,20 @@ export const buildLoaders = ({
     ],
   };
 
-  const fileLoader = {
-    test: /\.(png|jpe?g|gif|woff2|woff)$/i,
-    use: [
-      {
-        loader: "file-loader",
-      },
-    ],
+  const fontsLoader = {
+    test: /\.(woff(2)?|eot|ttf|otf)$/,
+    type: "asset/resource",
+    generator: {
+      filename: "fonts/[name][ext]",
+    },
   };
 
-  return [fileLoader, typeScriptLoader, cssLoader, scssLoader];
+  const imagesLoader = {
+    test: /\.(png|jpe?g|gif|svg)$/i,
+    type: "asset/resource",
+    generator: {
+      filename: "images/[name][hash][ext]",
+    },
+  };
+  return [typeScriptLoader, cssLoader, scssLoader, fontsLoader, imagesLoader];
 };

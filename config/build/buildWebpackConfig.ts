@@ -16,7 +16,7 @@ export const buildWebpackConfig = (
     mode: mode,
     entry: paths.entry,
     output: {
-      filename: "[name].[contenthash].js",
+      filename: "js/[name].[contenthash].js",
       path: paths.build,
       clean: true,
     },
@@ -26,7 +26,33 @@ export const buildWebpackConfig = (
     resolve: buildResolvers(),
     optimization: {
       minimize: true,
+      usedExports: true,
       minimizer: ["...", new CssMinimizerPlugin()],
+      splitChunks: {
+        chunks: "all",
+        maxInitialRequests: Infinity,
+        minSize: 0,
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name(module: webpack.NormalModule): string {
+              if (module.context === null) {
+                return "unknown";
+              }
+
+              const match = module.context.match(
+                /[\\/]node_modules[\\/](.*?)([\\/]|$)/
+              );
+
+              if (match && match[1]) {
+                const packageName = match[1].replace("@", "");
+                return `npm.${packageName}`;
+              }
+              return "unknown";
+            },
+          },
+        },
+      },
     },
     plugins: buildPlugins(options),
     devServer: isDev ? buildDevServer(options) : undefined,
