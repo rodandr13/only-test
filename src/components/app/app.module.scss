@@ -9,8 +9,7 @@
   margin: 0 auto;
   border-left: 1px solid var(--border-light-gray);
   border-right: 1px solid var(--border-light-gray);
-  background:
-          linear-gradient(to bottom, var(--border-light-gray), var(--border-light-gray)) center / 1px 100% no-repeat;
+  background: linear-gradient(to bottom, var(--border-light-gray), var(--border-light-gray)) center / 1px 100% no-repeat;
   height: 100%;
 }
 
@@ -52,11 +51,16 @@
 .dates {
   position: relative;
   background: linear-gradient(to right, var(--border-light-gray), var(--border-light-gray)) center / 100% 1px no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .events {
   padding-top: 40px;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
 }
 
 
@@ -104,6 +108,7 @@
     max-width: 160px;
     margin: 40px 0 40px 0;
     bottom: 0;
+
     &::before {
       background: none;
     }
