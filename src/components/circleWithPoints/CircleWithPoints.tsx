@@ -4,20 +4,16 @@ import { gsap } from "gsap";
 
 import styles from "./circleWithPoints.module.scss";
 import { TimeInterval } from "../../__mocks/types";
+import useCircleRotation from "../../hooks/useCircleRotation";
 import useResponsiveRadius from "../../hooks/useResponsiveRadius";
+import { getCSSVariable } from "../../utils/getCSSVariable";
+import { CirclePoint } from "../circlePoint/CirclePoint";
 
 interface CircleWithPointsProps {
   timeIntervals: TimeInterval[];
   setActiveIndex: (index: number) => void;
   activeIndex: number;
 }
-
-const getCSSVariable = (variable: string): number => {
-  const value = getComputedStyle(document.documentElement)
-    .getPropertyValue(variable)
-    .trim();
-  return parseFloat(value) || 0;
-};
 
 export const CircleWithPoints = ({
   timeIntervals,
@@ -29,6 +25,7 @@ export const CircleWithPoints = ({
 
   const breakpoints = useMemo(
     () => ({
+      xs: getCSSVariable("--breakpoint-xs"),
       sm: getCSSVariable("--breakpoint-sm"),
       md: getCSSVariable("--breakpoint-md"),
       lg: getCSSVariable("--breakpoint-lg"),
@@ -39,7 +36,6 @@ export const CircleWithPoints = ({
   const radius = useResponsiveRadius(breakpoints, defaultRadius);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const timelineRef = useRef<gsap.core.Timeline | null>(null);
   const [isRotating, setIsRotating] = useState(true);
 
   const offset = 30;
@@ -59,56 +55,12 @@ export const CircleWithPoints = ({
     });
   }, [angles, radius]);
 
-  const rotateToIndex = useCallback(
-    (idx: number) => {
-      const anglePerPoint = 360 / pointsCount;
-      return offset - anglePerPoint * idx;
-    },
-    [pointsCount, offset]
-  );
-
-  const rotateCircle = useCallback(
-    (index: number) => {
-      if (!wrapperRef.current) return;
-
-      setIsRotating(false);
-
-      const targetRotation = rotateToIndex(index);
-      const pointsElements =
-        wrapperRef.current.querySelectorAll("[data-point]");
-
-      if (timelineRef.current) {
-        timelineRef.current.kill();
-      }
-
-      timelineRef.current = gsap.timeline({
-        onComplete: () => setIsRotating(true),
-      });
-
-      timelineRef.current.to(
-        wrapperRef.current,
-        {
-          rotation: targetRotation,
-          duration: 1,
-          ease: "power2.inOut",
-        },
-        0
-      );
-
-      timelineRef.current.to(
-        pointsElements,
-        {
-          rotation: -targetRotation,
-          duration: 1,
-          ease: "power2.inOut",
-        },
-        0
-      );
-
-      timelineRef.current.play();
-    },
-    [rotateToIndex]
-  );
+  const { rotateCircle } = useCircleRotation({
+    wrapperRef,
+    pointsCount,
+    offset,
+    setIsRotating,
+  });
 
   const handleClick = useCallback(
     (index: number) => {
@@ -122,7 +74,7 @@ export const CircleWithPoints = ({
     if (activeIndex !== undefined && activeIndex !== null) {
       rotateCircle(activeIndex);
     }
-  }, [activeIndex, rotateCircle]);
+  }, [radius, activeIndex, rotateCircle]);
 
   useEffect(() => {
     if (!wrapperRef.current) return;
@@ -137,34 +89,16 @@ export const CircleWithPoints = ({
       <div className={styles.circle}>
         <div className={styles.pointsContainer} ref={wrapperRef}>
           {points.map(({ x, y, index }) => (
-            <div
+            <CirclePoint
               key={index}
-              data-point
-              onClick={() => handleClick(index)}
-              className={`${styles.point} ${
-                activeIndex === index ? styles.pointActive : ""
-              }`}
-              style={{ left: `${x}px`, top: `${y}px` }}
-              role="button"
-              aria-pressed={activeIndex === index}
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  handleClick(index);
-                }
-              }}
-            >
-              <span className={styles.pointNumber}>{index + 1}</span>
-              <p
-                className={`${styles.pointTitle} ${
-                  activeIndex === index && isRotating
-                    ? styles.pointTitleActive
-                    : ""
-                }`}
-              >
-                {timeIntervals[index].name}
-              </p>
-            </div>
+              x={x}
+              y={y}
+              index={index}
+              isActive={activeIndex === index}
+              onClick={handleClick}
+              title={timeIntervals[index].name}
+              isRotating={isRotating}
+            />
           ))}
         </div>
       </div>

@@ -33,6 +33,7 @@
 .filled {
   background: var(--white);
   box-shadow: 0 0 15px 0 var(--shadow-gray);
+
   & path {
     stroke: var(--blue);
   }
@@ -41,10 +42,24 @@
 .outline {
   border: 1px solid var(--border-gray);
   transition: background-color 0.2s ease-in-out;
+
   &:hover {
     background: var(--white);
   }
 }
+
+.button:disabled {
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.button:disabled:hover {
+  background: inherit;
+  color: inherit;
+  pointer-events: none;
+}
+
 
 
 @media screen and (max-width: v.$breakpoint-lg) {

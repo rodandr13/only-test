@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 const useResponsiveRadius = (
   breakpoints: {
+    xs: number;
     sm: number;
     md: number;
     lg: number;
@@ -10,7 +11,8 @@ const useResponsiveRadius = (
   defaultRadius: number
 ): number => {
   const calculateRadius = (width: number): number => {
-    if (width <= breakpoints.sm) return 0;
+    if (width <= breakpoints.xs) return 0;
+    if (width <= breakpoints.sm) return 100;
     if (width <= breakpoints.md) return 150;
     if (width <= breakpoints.lg) return 185;
     if (width <= breakpoints.xl) return 215;

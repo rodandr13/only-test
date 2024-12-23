@@ -1,6 +1,7 @@
 import styles from "./datesCarousel.module.scss";
 import { TimeInterval } from "../../__mocks/types";
 import { ActiveYears } from "../../types";
+import { getCSSVariable } from "../../utils/getCSSVariable";
 import { ButtonControl } from "../buttonControl/ButtonControl";
 import { CircleWithPoints } from "../circleWithPoints/CircleWithPoints";
 import { YearsInterval } from "../yearsInterval/YearsInterval";
@@ -20,6 +21,8 @@ export const DatesCarousel = ({
 }: DatesCarouselProps) => {
   const currentInterval = activeIndex + 1;
   const countIntervals = timeIntervals.length;
+  const smBreakpoint = getCSSVariable("--breakpoint-sm");
+  const isMobile = window.matchMedia(`(max-width: ${smBreakpoint}px)`).matches;
 
   return (
     <section>
@@ -35,13 +38,15 @@ export const DatesCarousel = ({
             .toString()
             .padStart(2, "0")}`}
         </div>
-        <div className={styles.buttons}>
+        <div className={`${styles.buttons}`}>
           <ButtonControl
+            disabled={activeIndex === 0}
             direction="prev"
             variant="outline"
             onClick={() => setActiveIndex(Math.max(0, activeIndex - 1))}
           />
           <ButtonControl
+            disabled={activeIndex === countIntervals - 1}
             direction="next"
             variant="outline"
             onClick={() =>
@@ -52,12 +57,13 @@ export const DatesCarousel = ({
       </div>
       <div className={styles.bullets}>
         {timeIntervals.map((_, index) => (
-          <div
+          <button
             key={`bullet-${index}`}
+            onClick={() => setActiveIndex(index)}
             className={`${styles.bullet} ${
               index === activeIndex ? styles.bulletActive : ""
             }`}
-          ></div>
+          ></button>
         ))}
       </div>
     </section>

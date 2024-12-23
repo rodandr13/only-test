@@ -18,7 +18,7 @@
   font-size: 25px;
   line-height: 1.2;
   color: var(--blue);
-  margin: 0;
+  margin: 20px 0 15px 0;
   padding: 0;
   font-weight: 400;
 }
@@ -38,7 +38,7 @@
 .controlButtons {
   width: 100%;
   position: absolute;
-  top: 65px;
+  top: 85px;
   left: 0;
   z-index: 1;
 }
@@ -64,6 +64,12 @@
   visibility: hidden;
 }
 
+.intervalName {
+  display: none;
+  padding: 0;
+  margin: 0;
+  font-size: 24px;
+}
 
 
 @media screen and (max-width: v.$breakpoint-xl) {
@@ -82,6 +88,10 @@
 }
 
 @media screen and (max-width: v.$breakpoint-sm) {
+  .intervalName {
+    display: block;
+    padding: 0 0 20px 20px;
+  }
   .events {
     margin: 0;
   }
@@ -95,6 +105,18 @@
     gap: 25px;
   }
 
+  .controlButtons {
+    display: none;
+  }
+  :global(.swiper-slide-next) {
+    opacity: 0.4;
+  }
+}
+
+@media screen and (max-width: v.$breakpoint-xs) {
+  .intervalName {
+    font-size: 16px;
+  }
   .eventsItem h2 {
     font-size: 16px;
     line-height: 19.2px;
@@ -102,9 +124,5 @@
   .eventsItem p {
     font-size: 14px;
     line-height: 20.3px;
-  }
-
-  .controlButtons {
-    display: none;
   }
 }

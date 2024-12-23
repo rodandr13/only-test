@@ -61,6 +61,10 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
+  outline: none;
+  border: none;
+  display: block;
+  padding: 0;
 
   &_active {
     background: var(--black-blue);
@@ -113,8 +117,6 @@
 
 @media screen and (max-width: v.$breakpoint-sm) {
   .years {
-    font-size: 56px;
-    line-height: 72px;
     position: static;
     transform: none;
     gap: 40px;
@@ -127,11 +129,6 @@
     margin: 10px 0 0 0;
     gap: 8px;
   }
-  .circle {
-    display: none;
-    //width: 230px;
-    //height: 230px;
-  }
   .bullets {
     display: flex;
     position: absolute;
@@ -142,3 +139,9 @@
 }
 
 
+@media screen and (max-width: v.$breakpoint-xs) {
+  .years {
+    font-size: 56px;
+    line-height: 72px;
+  }
+}

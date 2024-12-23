@@ -1,9 +1,12 @@
+
+$breakpoint-xs: 480px;
 $breakpoint-sm: 580px;
 $breakpoint-md: 768px;
 $breakpoint-lg: 1024px;
 $breakpoint-xl: 1200px;
 
 :root {
+  --breakpoint-xs: #{$breakpoint-xs};
   --breakpoint-sm: #{$breakpoint-sm};
   --breakpoint-md: #{$breakpoint-md};
   --breakpoint-lg: #{$breakpoint-lg};

@@ -6,9 +6,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import styles from "./eventsSlider.module.scss";
 import { TimeInterval } from "../../__mocks/types";
+import { getCSSVariable } from "../../utils/getCSSVariable";
 import { ButtonControl } from "../buttonControl/ButtonControl";
 import "swiper/css";
-import "swiper/css/pagination";
 
 interface EventsSliderProps {
   timeIntervals: TimeInterval[];
@@ -22,8 +22,12 @@ export const EventsSlider = ({
   const [displayedIndex, setDisplayedIndex] = useState(activeIndex);
   const containerRef = useRef<HTMLDivElement>(null);
   const isFirstRender = useRef(true);
-
   useEffect(() => {
+    const smBreakpoint = getCSSVariable("--breakpoint-sm");
+    const isMobile = window.matchMedia(
+      `(max-width: ${smBreakpoint}px)`
+    ).matches;
+
     if (isFirstRender.current) {
       isFirstRender.current = false;
       return;
@@ -35,10 +39,19 @@ export const EventsSlider = ({
         opacity: 0,
         onComplete: () => {
           setDisplayedIndex(activeIndex);
-          gsap.to(containerRef.current, {
-            duration: 0.4,
-            opacity: 1,
-          });
+
+          const animationConfig: gsap.TweenVars = { opacity: 1, duration: 0.4 };
+
+          if (isMobile) {
+            animationConfig.y = 0;
+            gsap.fromTo(
+              containerRef.current,
+              { opacity: 0, y: 20 },
+              animationConfig
+            );
+          } else {
+            gsap.to(containerRef.current, animationConfig);
+          }
         },
       });
     }
@@ -48,20 +61,20 @@ export const EventsSlider = ({
 
   return (
     <section className={styles.events} ref={containerRef}>
+      <h2 className={styles.intervalName}>
+        {timeIntervals[displayedIndex].name}
+      </h2>
       <Swiper
-        slidesPerView={3}
+        slidesPerView={1.5}
+        autoHeight={true}
         modules={[Navigation]}
         navigation={{
           nextEl: `.${styles.controlButtonsNext}`,
           prevEl: `.${styles.controlButtonsPrev}`,
         }}
         className={styles.eventsContainer}
-        spaceBetween={80}
+        spaceBetween={25}
         breakpoints={{
-          480: {
-            slidesPerView: 1,
-            spaceBetween: 25,
-          },
           580: {
             slidesPerView: 2,
             spaceBetween: 25,
