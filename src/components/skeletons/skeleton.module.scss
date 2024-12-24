@@ -1,0 +1,196 @@
+@use '../../styles/variables' as v;
+
+.skeleton {
+  padding: 0;
+  margin: 0;
+  border-radius: 2px;
+  background: var(--border-light-gray);
+  position: relative;
+  overflow: hidden;
+  opacity: 0.5;
+}
+
+.skeleton::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.yearsContainer {
+  position: relative;
+  width: 937px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 530px;
+    height: 530px;
+    border: 1px solid var(--border-circle-gray);
+    border-radius: 50%;
+  }
+}
+
+.dot {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+}
+
+.circleDot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: 0 0;
+  transform: rotate(-66deg) translateX(235px);
+}
+
+.years {
+  display: flex;
+  justify-content: center;
+  gap: 80px;
+}
+
+.year {
+  width: 80%;
+  height: 160px;
+  flex-grow: 1;
+}
+
+.eventsContainer {
+  max-width: 1440px;
+  padding: 0 80px;
+  width: 100%;
+  display: flex;
+  gap: 40px;
+  margin: 20px 0 0 0;
+}
+
+.event {
+  flex-grow: 1;
+}
+
+.eventHeader {
+  width: 60px;
+  height: 30px;
+  margin: 0 0 15px 0;
+}
+
+.eventDescription {
+  width: 100%;
+  height: 90px;
+}
+
+@media screen and (max-width: v.$breakpoint-xl) {
+  .yearsContainer {
+    width: 720px;
+    &::before {
+      width: 430px;
+      height: 430px;
+    }
+  }
+  .year {
+    height: 120px;
+  }
+  .circleDot {
+    transform: rotate(-66deg) translateX(185px);
+  }
+}
+
+@media screen and (max-width: v.$breakpoint-lg) {
+  .yearsContainer {
+    width: 620px;
+    &::before {
+      width: 370px;
+      height: 370px;
+    }
+  }
+  .year {
+    height: 90px;
+  }
+  .circleDot {
+    transform: rotate(-69deg) translateX(155px);
+  }
+  .eventsContainer {
+    gap: 30px;
+  }
+  .event:last-child {
+    display: none;
+  }
+}
+
+@media screen and (max-width: v.$breakpoint-md) {
+  .yearsContainer {
+    width: 500px;
+    &::before {
+      width: 300px;
+      height: 300px;
+    }
+  }
+  .year {
+    height: 80px;
+  }
+  .circleDot {
+    transform: rotate(-70deg) translateX(120px);
+  }
+}
+
+@media screen and (max-width: v.$breakpoint-sm) {
+  .yearsContainer {
+    width: 430px;
+    &::before {
+      display: none;
+    }
+  }
+  .years {
+    gap: 40px;
+  }
+  .year {
+    height: 80px;
+  }
+  .circleDot {
+    display: none;
+  }
+
+  .eventsContainer {
+    padding: 0 20px;
+    margin: 80px 0 0 0;
+  }
+  .event:nth-child(1) {
+    width: 70%;
+  }
+  .event:nth-child(2) {
+    width: 30%;
+  }
+}
+
+@media screen and (max-width: v.$breakpoint-xs) {
+  .yearsContainer {
+    width: 300px;
+  }
+  .years {
+    gap: 40px;
+  }
+  .year {
+    height: 60px;
+  }
+  .eventsContainer {
+    margin: 60px 0 0 0;
+  }
+}

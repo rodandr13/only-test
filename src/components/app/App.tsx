@@ -4,6 +4,8 @@ import styles from "./app.module.scss";
 import { fetchMockData } from "../../__mocks/fetchMockdata";
 import { MockData } from "../../__mocks/types";
 import { ActiveYears } from "../../types";
+import { DatesCarouselSkeleton } from "../skeletons/DatesCarouselSkeleton";
+import { EventsSliderSkeleton } from "../skeletons/EventsSliderSkeleton";
 
 const DatesCarousel = lazy(() =>
   import("../datesCarousel/DatesCarousel").then((module) => ({
@@ -56,7 +58,7 @@ export const App = () => {
           <h1 className={styles.appTitle}>Исторические даты</h1>
         </div>
         <div className={styles.dates}>
-          <Suspense fallback={<div>Загрузка</div>}>
+          <Suspense fallback={<DatesCarouselSkeleton />}>
             <DatesCarousel
               activeYears={activeYears}
               timeIntervals={data.timeIntervals}
@@ -66,7 +68,7 @@ export const App = () => {
           </Suspense>
         </div>
         <div className={styles.events}>
-          <Suspense fallback={<div>Загрузка</div>}>
+          <Suspense fallback={<EventsSliderSkeleton />}>
             <EventsSlider
               activeIndex={activeIndex}
               timeIntervals={data.timeIntervals}
