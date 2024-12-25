@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 import { gsap } from "gsap";
 
@@ -7,32 +7,43 @@ interface UseAnimatedYearsProps {
   to: number;
 }
 
-export const useAnimatedYears = ({ from, to }: UseAnimatedYearsProps) => {
-  const [displayFrom, setDisplayFrom] = useState(from);
-  const [displayTo, setDisplayTo] = useState(to);
+export function useAnimatedYears({ from, to }: UseAnimatedYearsProps) {
+  const fromValueRef = useRef<{ value: number }>({ value: from });
+  const toValueRef = useRef<{ value: number }>({ value: to });
 
-  const fromRef = useRef<{ value: number }>({ value: from });
-  const toRef = useRef<{ value: number }>({ value: to });
+  const fromElementRef = useRef<HTMLDivElement>(null);
+  const toElementRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    gsap.to(fromRef.current, {
+    gsap.to(fromValueRef.current, {
       duration: 1,
       value: from,
       ease: "power1.out",
       onUpdate: () => {
-        setDisplayFrom(Math.floor(fromRef.current.value));
+        if (fromElementRef.current) {
+          fromElementRef.current.textContent = String(
+            Math.floor(fromValueRef.current.value)
+          );
+        }
       },
     });
 
-    gsap.to(toRef.current, {
+    gsap.to(toValueRef.current, {
       duration: 1,
       value: to,
       ease: "power1.out",
       onUpdate: () => {
-        setDisplayTo(Math.floor(toRef.current.value));
+        if (toElementRef.current) {
+          toElementRef.current.textContent = String(
+            Math.floor(toValueRef.current.value)
+          );
+        }
       },
     });
   }, [from, to]);
 
-  return { displayFrom, displayTo };
-};
+  return {
+    fromElementRef,
+    toElementRef,
+  };
+}
