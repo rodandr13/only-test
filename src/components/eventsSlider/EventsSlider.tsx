@@ -7,7 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import styles from "./eventsSlider.module.scss";
 import { TimeInterval } from "../../__mocks/types";
 import { getCSSVariable } from "../../utils/getCSSVariable";
-import { ButtonControl } from "../buttonControl/ButtonControl";
+import { ButtonControl } from "../ButtonControl/ButtonControl";
 import "swiper/css";
 
 interface EventsSliderProps {

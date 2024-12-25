@@ -1,5 +1,5 @@
 import styles from "./buttonControl.module.scss";
-import { ChevronIcon } from "../chevronIcon/ChevronIcon";
+import { ChevronIcon } from "../ChevronIcon/ChevronIcon";
 
 interface ButtonControlProps {
   direction: "prev" | "next";

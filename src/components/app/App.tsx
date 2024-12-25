@@ -4,17 +4,17 @@ import styles from "./app.module.scss";
 import { fetchMockData } from "../../__mocks/fetchMockdata";
 import { MockData } from "../../__mocks/types";
 import { ActiveYears } from "../../types";
-import { DatesCarouselSkeleton } from "../skeletons/DatesCarouselSkeleton";
-import { EventsSliderSkeleton } from "../skeletons/EventsSliderSkeleton";
+import { DatesCarouselSkeleton } from "../Skeletons/DatesCarouselSkeleton";
+import { EventsSliderSkeleton } from "../Skeletons/EventsSliderSkeleton";
 
 const DatesCarousel = lazy(() =>
-  import("../datesCarousel/DatesCarousel").then((module) => ({
-    default: module.DatesCarousel,
+  import("../YearsCarousel/YearsCarousel").then((module) => ({
+    default: module.YearsCarousel,
   }))
 );
 
 const EventsSlider = lazy(() =>
-  import("../eventsSlider/EventsSlider").then((module) => ({
+  import("../EventsSlider/EventsSlider").then((module) => ({
     default: module.EventsSlider,
   }))
 );
@@ -27,28 +27,30 @@ export const App = () => {
     to: 0,
   });
 
-  const fetchData = async () => {
-    try {
-      const response = await fetchMockData({ latency: 0 });
-      setData(response);
-      if (response.timeIntervals.length > 0) {
-        const { start, end } = response.timeIntervals[0];
-        setActiveYears({ from: start, to: end });
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetchMockData({ latency: 0 });
+        setData(response);
+        if (response.timeIntervals.length > 0) {
+          const { start, end } = response.timeIntervals[0];
+          setActiveYears({ from: start, to: end });
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
     fetchData();
   }, []);
 
   useEffect(() => {
-    if (data) {
-      const { start, end } = data.timeIntervals[activeIndex];
+    if (!data) return;
+    const { start, end } = data.timeIntervals[activeIndex];
+    if (start !== activeYears.from || end !== activeYears.to) {
       setActiveYears({ from: start, to: end });
     }
-  }, [activeIndex, data]);
+  }, [activeIndex, activeYears.from, activeYears.to, data]);
+
   if (!data) return null;
 
   return (

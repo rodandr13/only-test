@@ -7,7 +7,7 @@ import { TimeInterval } from "../../__mocks/types";
 import useCircleRotation from "../../hooks/useCircleRotation";
 import useResponsiveRadius from "../../hooks/useResponsiveRadius";
 import { getCSSVariable } from "../../utils/getCSSVariable";
-import { CirclePoint } from "../circlePoint/CirclePoint";
+import { CirclePoint } from "../CirclePoint/CirclePoint";
 
 interface CircleWithPointsProps {
   timeIntervals: TimeInterval[];
@@ -34,7 +34,6 @@ export const CircleWithPoints = ({
     []
   );
   const radius = useResponsiveRadius(breakpoints, defaultRadius);
-
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [isRotating, setIsRotating] = useState(true);
 

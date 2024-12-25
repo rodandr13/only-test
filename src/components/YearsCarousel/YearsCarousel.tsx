@@ -1,10 +1,9 @@
 import styles from "./datesCarousel.module.scss";
 import { TimeInterval } from "../../__mocks/types";
 import { ActiveYears } from "../../types";
-import { getCSSVariable } from "../../utils/getCSSVariable";
-import { ButtonControl } from "../buttonControl/ButtonControl";
-import { CircleWithPoints } from "../circleWithPoints/CircleWithPoints";
-import { YearsInterval } from "../yearsInterval/YearsInterval";
+import { ButtonControl } from "../ButtonControl/ButtonControl";
+import { CircleWithPoints } from "../CircleWithPoints/CircleWithPoints";
+import { YearsInterval } from "../YearsInterval/YearsInterval";
 
 interface DatesCarouselProps {
   timeIntervals: TimeInterval[];
@@ -13,7 +12,7 @@ interface DatesCarouselProps {
   activeIndex: number;
 }
 
-export const DatesCarousel = ({
+export const YearsCarousel = ({
   timeIntervals,
   activeYears,
   setActiveIndex,
@@ -21,8 +20,6 @@ export const DatesCarousel = ({
 }: DatesCarouselProps) => {
   const currentInterval = activeIndex + 1;
   const countIntervals = timeIntervals.length;
-  const smBreakpoint = getCSSVariable("--breakpoint-sm");
-  const isMobile = window.matchMedia(`(max-width: ${smBreakpoint}px)`).matches;
 
   return (
     <section>
