@@ -1,11 +1,11 @@
-import { useCallback, useRef } from "react";
+import { RefObject, useCallback, useRef } from "react";
 
 import { gsap } from "gsap";
 
 import { ANIMATION_DURATION } from "../utils/constants";
 
 interface UseCircleRotationProps {
-  wrapperRef: React.RefObject<HTMLDivElement | null>;
+  wrapperRef: RefObject<HTMLDivElement | null>;
   pointsCount: number;
   offset: number;
 }
@@ -18,9 +18,9 @@ const useCircleRotation = ({
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
 
   const rotateToIndex = useCallback(
-    (idx: number): number => {
+    (index: number): number => {
       const anglePerPoint = 360 / pointsCount;
-      return offset - anglePerPoint * idx;
+      return offset - anglePerPoint * index;
     },
     [pointsCount, offset]
   );

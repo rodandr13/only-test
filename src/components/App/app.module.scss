@@ -3,7 +3,8 @@
 .app {
   position: relative;
   max-width: 1440px;
-  min-height: 730px;
+  min-height: 800px;
+  max-height: 1300px;
   min-width: 320px;
   overflow: hidden;
   margin: 0 auto;
@@ -14,13 +15,11 @@
 }
 
 .app__title {
+  position: relative;
   margin: 0 0 0 0;
   padding: 0 0 0 80px;
   font-size: 56px;
   line-height: 1.2;
-  position: absolute;
-  left: 0;
-  bottom: -100px;
   font-weight: 700;
   max-width: 353px;
   width: 100%;
@@ -40,15 +39,16 @@
   display: grid;
   height: 100%;
   grid-template-columns: 1fr;
-  grid-template-rows: 0.3fr 1.8fr 0.9fr;
+  grid-template-rows: minmax(110px, 0.7fr) 1.7fr 1fr;
   gap: 0;
 }
 
 .header {
   position: relative;
+  align-self: end;
 }
 
-.dates {
+.years {
   position: relative;
   background: linear-gradient(to right, var(--border-light-gray), var(--border-light-gray)) center / 100% 1px no-repeat;
   display: flex;
@@ -66,12 +66,14 @@
 
 
 @media screen and (max-width: v.$breakpoint-xl) {
+  .app {
+    min-height: 650px;
+  }
   .app__title {
     font-size: 42px;
-    bottom: -80px;
   }
   .layout {
-    grid-template-rows: 0.3fr 1.8fr 1.1fr;
+    grid-template-rows: minmax(110px, 0.5fr) 1.7fr 1.1fr;
   }
 }
 
@@ -79,11 +81,10 @@
   .app__title {
     font-size: 34px;
     max-width: 280px;
-    bottom: -60px;
     padding: 0 0 0 40px;
   }
   .layout {
-    grid-template-rows: 0.3fr 1.8fr 1.3fr;
+    grid-template-rows: minmax(110px, 0.3fr) 1.7fr 1.1fr;
   }
 }
 
@@ -92,32 +93,30 @@
     font-size: 28px;
     max-width: 160px;
     padding: 0 0 0 20px;
-    bottom: -40px;
   }
   .layout {
-    grid-template-rows: 0.3fr 1.8fr 1.5fr;
+    grid-template-rows: minmax(100px, 0.2fr) 1.7fr 1.1fr;
   }
 }
 
 @media screen and (max-width: v.$breakpoint-sm) {
   .app {
-    min-height: 568px;
+    min-height: 700px;
+    max-height: 800px;
     background: none;
     border: none;
   }
   .app__title {
     max-width: 160px;
-    margin: 40px 0 40px 0;
-    bottom: -20px;
 
     &::before {
       background: none;
     }
   }
   .layout {
-    grid-template-rows: 0.6fr 1.0fr 1.7fr;
+    grid-template-rows: minmax(110px, 0.3fr) 1.5fr 1.7fr;
   }
-  .dates {
+  .years {
     position: static;
     background: none;
     display: flex;
@@ -130,12 +129,15 @@
 }
 
 @media screen and (max-width: v.$breakpoint-xs) {
+  .app {
+    min-height: 568px;
+  }
   .app__title {
     font-size: 20px;
     line-height: 24px;
   }
   .layout {
-    grid-template-rows: 0.6fr 0.5fr 2fr;
+    grid-template-rows: minmax(80px, 0.3fr) 0.7fr 2fr;
   }
   .events {
     padding-top: 40px;

@@ -13,7 +13,7 @@ import {
 import { DatesCarouselSkeleton } from "../Skeletons/DatesCarouselSkeleton";
 import { EventsSliderSkeleton } from "../Skeletons/EventsSliderSkeleton";
 
-const DatesCarousel = lazy(() =>
+const YearsCarousel = lazy(() =>
   import("../YearsCarousel/YearsCarousel").then((module) => ({
     default: module.YearsCarousel,
   }))
@@ -61,13 +61,13 @@ export const App = () => {
 
   return (
     <div className={styles.app}>
-      <div className={styles.layout}>
+      <main className={styles.layout}>
         <div className={styles.header}>
           <h1 className={styles.appTitle}>Исторические даты</h1>
         </div>
-        <div className={styles.dates}>
+        <div className={styles.years}>
           <Suspense fallback={<DatesCarouselSkeleton />}>
-            <DatesCarousel
+            <YearsCarousel
               activeYears={activeYears}
               timeIntervals={data.timeIntervals}
               setActiveIndex={setActiveIndex}
@@ -83,7 +83,7 @@ export const App = () => {
             />
           </Suspense>
         </div>
-      </div>
+      </main>
     </div>
   );
 };

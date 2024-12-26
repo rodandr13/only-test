@@ -7,6 +7,10 @@ import { TimeInterval } from "../../__mocks/types";
 import useCircleRotation from "../../hooks/useCircleRotation";
 import useResponsiveRadius from "../../hooks/useResponsiveRadius";
 import {
+  calculateAngles,
+  calculatePoints,
+} from "../../utils/circleCalculations";
+import {
   BREAKPOINTS,
   DEFAULT_RADIUS,
   POINTS_OFFSET,
@@ -24,26 +28,16 @@ export const CircleWithPoints = ({
   setActiveIndex,
   activeIndex,
 }: CircleWithPointsProps) => {
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const pointsCount = timeIntervals.length;
   const radius = useResponsiveRadius(BREAKPOINTS, DEFAULT_RADIUS);
-  const wrapperRef = useRef<HTMLDivElement>(null);
-
   const offset = POINTS_OFFSET;
-
-  const angles = useMemo(
-    () =>
-      Array.from({ length: pointsCount }, (_, i) => (360 / pointsCount) * i),
-    [pointsCount]
+  const angles = useMemo(() => calculateAngles(pointsCount), [pointsCount]);
+  const points = useMemo(
+    () => calculatePoints(angles, radius),
+    [angles, radius]
   );
 
-  const points = useMemo(() => {
-    return angles.map((angle, i) => {
-      const angleRad = (angle * Math.PI) / 180;
-      const x = radius * Math.sin(angleRad);
-      const y = -radius * Math.cos(angleRad);
-      return { x, y, index: i };
-    });
-  }, [angles, radius]);
   const { rotateCircle } = useCircleRotation({
     wrapperRef,
     pointsCount,
@@ -59,7 +53,7 @@ export const CircleWithPoints = ({
   );
 
   useEffect(() => {
-    if (activeIndex !== undefined && activeIndex !== null) {
+    if (activeIndex) {
       rotateCircle(activeIndex);
     }
   }, [radius, activeIndex, rotateCircle]);
