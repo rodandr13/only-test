@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 
 import { gsap } from "gsap";
 
@@ -6,7 +6,11 @@ import styles from "./circleWithPoints.module.scss";
 import { TimeInterval } from "../../__mocks/types";
 import useCircleRotation from "../../hooks/useCircleRotation";
 import useResponsiveRadius from "../../hooks/useResponsiveRadius";
-import { getCSSVariable } from "../../utils/getCSSVariable";
+import {
+  BREAKPOINTS,
+  DEFAULT_RADIUS,
+  POINTS_OFFSET,
+} from "../../utils/constants";
 import { CirclePoint } from "../CirclePoint/CirclePoint";
 
 interface CircleWithPointsProps {
@@ -21,23 +25,10 @@ export const CircleWithPoints = ({
   activeIndex,
 }: CircleWithPointsProps) => {
   const pointsCount = timeIntervals.length;
-  const defaultRadius = 265;
-
-  const breakpoints = useMemo(
-    () => ({
-      xs: getCSSVariable("--breakpoint-xs"),
-      sm: getCSSVariable("--breakpoint-sm"),
-      md: getCSSVariable("--breakpoint-md"),
-      lg: getCSSVariable("--breakpoint-lg"),
-      xl: getCSSVariable("--breakpoint-xl"),
-    }),
-    []
-  );
-  const radius = useResponsiveRadius(breakpoints, defaultRadius);
+  const radius = useResponsiveRadius(BREAKPOINTS, DEFAULT_RADIUS);
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const [isRotating, setIsRotating] = useState(true);
 
-  const offset = 30;
+  const offset = POINTS_OFFSET;
 
   const angles = useMemo(
     () =>
@@ -53,12 +44,10 @@ export const CircleWithPoints = ({
       return { x, y, index: i };
     });
   }, [angles, radius]);
-
   const { rotateCircle } = useCircleRotation({
     wrapperRef,
     pointsCount,
     offset,
-    setIsRotating,
   });
 
   const handleClick = useCallback(
@@ -96,7 +85,6 @@ export const CircleWithPoints = ({
               isActive={activeIndex === index}
               onClick={handleClick}
               title={timeIntervals[index].name}
-              isRotating={isRotating}
             />
           ))}
         </div>

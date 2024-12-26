@@ -1,9 +1,10 @@
 import styles from "./buttonControl.module.scss";
+import { ButtonDirection, ButtonVariant } from "../../types";
 import { ChevronIcon } from "../ChevronIcon/ChevronIcon";
 
 interface ButtonControlProps {
-  direction: "prev" | "next";
-  variant: "filled" | "outline";
+  direction: ButtonDirection;
+  variant: ButtonVariant;
   onClick?: () => void;
   disabled?: boolean;
 }

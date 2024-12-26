@@ -4,6 +4,12 @@ import styles from "./app.module.scss";
 import { fetchMockData } from "../../__mocks/fetchMockdata";
 import { MockData } from "../../__mocks/types";
 import { ActiveYears } from "../../types";
+import {
+  INITIAL_SLIDE_INDEX,
+  INITIAL_YEAR_FROM,
+  INITIAL_YEAR_TO,
+  MOCK_DATA_LATENCY,
+} from "../../utils/constants";
 import { DatesCarouselSkeleton } from "../Skeletons/DatesCarouselSkeleton";
 import { EventsSliderSkeleton } from "../Skeletons/EventsSliderSkeleton";
 
@@ -21,19 +27,19 @@ const EventsSlider = lazy(() =>
 
 export const App = () => {
   const [data, setData] = useState<MockData | null>(null);
-  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [activeIndex, setActiveIndex] = useState<number>(INITIAL_SLIDE_INDEX);
   const [activeYears, setActiveYears] = useState<ActiveYears>({
-    from: 0,
-    to: 0,
+    from: INITIAL_YEAR_FROM,
+    to: INITIAL_YEAR_TO,
   });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetchMockData({ latency: 0 });
+        const response = await fetchMockData({ latency: MOCK_DATA_LATENCY });
         setData(response);
         if (response.timeIntervals.length > 0) {
-          const { start, end } = response.timeIntervals[0];
+          const { start, end } = response.timeIntervals[INITIAL_SLIDE_INDEX];
           setActiveYears({ from: start, to: end });
         }
       } catch (error) {

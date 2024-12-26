@@ -2,6 +2,8 @@ import { useEffect, useRef } from "react";
 
 import { gsap } from "gsap";
 
+import { ANIMATION_DURATION } from "../utils/constants";
+
 interface UseAnimatedYearsProps {
   from: number;
   to: number;
@@ -16,7 +18,7 @@ export function useAnimatedYears({ from, to }: UseAnimatedYearsProps) {
 
   useEffect(() => {
     gsap.to(fromValueRef.current, {
-      duration: 1,
+      duration: ANIMATION_DURATION,
       value: from,
       ease: "power1.out",
       onUpdate: () => {
@@ -29,7 +31,7 @@ export function useAnimatedYears({ from, to }: UseAnimatedYearsProps) {
     });
 
     gsap.to(toValueRef.current, {
-      duration: 1,
+      duration: ANIMATION_DURATION,
       value: to,
       ease: "power1.out",
       onUpdate: () => {

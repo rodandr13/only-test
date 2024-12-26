@@ -2,18 +2,18 @@ import { useCallback, useRef } from "react";
 
 import { gsap } from "gsap";
 
+import { ANIMATION_DURATION } from "../utils/constants";
+
 interface UseCircleRotationProps {
   wrapperRef: React.RefObject<HTMLDivElement | null>;
   pointsCount: number;
   offset: number;
-  setIsRotating: (rotating: boolean) => void;
 }
 
 const useCircleRotation = ({
   wrapperRef,
   pointsCount,
   offset,
-  setIsRotating,
 }: UseCircleRotationProps) => {
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
 
@@ -29,8 +29,6 @@ const useCircleRotation = ({
     (index: number) => {
       if (!wrapperRef.current) return;
 
-      setIsRotating(false);
-
       const targetRotation = rotateToIndex(index);
       const pointsElements =
         wrapperRef.current.querySelectorAll("[data-point]");
@@ -39,15 +37,13 @@ const useCircleRotation = ({
         timelineRef.current.kill();
       }
 
-      timelineRef.current = gsap.timeline({
-        onComplete: () => setIsRotating(true),
-      });
+      timelineRef.current = gsap.timeline({});
 
       timelineRef.current.to(
         wrapperRef.current,
         {
           rotation: targetRotation,
-          duration: 1,
+          duration: ANIMATION_DURATION,
           ease: "power2.inOut",
         },
         0
@@ -57,7 +53,7 @@ const useCircleRotation = ({
         pointsElements,
         {
           rotation: -targetRotation,
-          duration: 1,
+          duration: ANIMATION_DURATION,
           ease: "power2.inOut",
         },
         0
@@ -65,7 +61,7 @@ const useCircleRotation = ({
 
       timelineRef.current.play();
     },
-    [rotateToIndex, wrapperRef, setIsRotating]
+    [rotateToIndex, wrapperRef]
   );
 
   return { rotateCircle };

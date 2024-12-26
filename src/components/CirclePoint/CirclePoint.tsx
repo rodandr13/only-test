@@ -9,16 +9,16 @@ interface CirclePointProps {
   isActive: boolean;
   onClick: (index: number) => void;
   title: string;
-  isRotating: boolean;
 }
 
 export const CirclePoint = memo(
-  ({ x, y, index, isActive, onClick, title, isRotating }: CirclePointProps) => {
+  ({ x, y, index, isActive, onClick, title }: CirclePointProps) => {
     const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
       if (e.key === "Enter" || e.key === " ") {
         onClick(index);
       }
     };
+
     return (
       <div
         data-point
@@ -33,7 +33,7 @@ export const CirclePoint = memo(
         <span className={styles.pointNumber}>{index + 1}</span>
         <p
           className={`${styles.pointTitle} ${
-            isActive && isRotating ? styles.pointTitleActive : ""
+            isActive ? styles.pointTitleActive : ""
           }`}
         >
           {title}

@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import styles from "./eventsSlider.module.scss";
 import { TimeInterval } from "../../__mocks/types";
-import { getCSSVariable } from "../../utils/getCSSVariable";
+import { BREAKPOINTS, FADE_DURATION } from "../../utils/constants";
 import { ButtonControl } from "../ButtonControl/ButtonControl";
 import "swiper/css";
 
@@ -23,9 +23,8 @@ export const EventsSlider = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const isFirstRender = useRef(true);
   useEffect(() => {
-    const smBreakpoint = getCSSVariable("--breakpoint-sm");
     const isMobile = window.matchMedia(
-      `(max-width: ${smBreakpoint}px)`
+      `(max-width: ${BREAKPOINTS.sm}px)`
     ).matches;
 
     if (isFirstRender.current) {
@@ -35,12 +34,15 @@ export const EventsSlider = ({
 
     if (displayedIndex !== activeIndex && containerRef.current) {
       gsap.to(containerRef.current, {
-        duration: 0.4,
+        duration: FADE_DURATION,
         opacity: 0,
         onComplete: () => {
           setDisplayedIndex(activeIndex);
 
-          const animationConfig: gsap.TweenVars = { opacity: 1, duration: 0.4 };
+          const animationConfig: gsap.TweenVars = {
+            opacity: 1,
+            duration: FADE_DURATION,
+          };
 
           if (isMobile) {
             animationConfig.y = 0;
@@ -75,15 +77,15 @@ export const EventsSlider = ({
         className={styles.eventsContainer}
         spaceBetween={25}
         breakpoints={{
-          580: {
+          [BREAKPOINTS.sm]: {
             slidesPerView: 2,
             spaceBetween: 25,
           },
-          1024: {
+          [BREAKPOINTS.lg]: {
             slidesPerView: 3,
             spaceBetween: 40,
           },
-          1200: {
+          [BREAKPOINTS.xl]: {
             slidesPerView: 3,
             spaceBetween: 60,
           },

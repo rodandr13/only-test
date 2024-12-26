@@ -1,22 +1,25 @@
 @use './normalize';
 
 @font-face {
-  font-family: 'PTSans';
+  font-family: 'PT Sans';
   src: url('../assets/fonts/PTSans-Bold.woff2') format('woff2');
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'PTSans';
+  font-family: 'PT Sans';
   src: url('../assets/fonts/PTSans-Regular.woff2') format('woff2');
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'BebasNeue';
+  font-family: 'Bebas Neue';
   src: url('../assets/fonts/BebasNeue-Regular.woff2') format('woff2');
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
@@ -29,7 +32,7 @@ html, body {
 
 body {
   min-width: 320px;
-  font-family: 'PTSans', sans-serif;
+  font-family: 'PT Sans', sans-serif;
   color: var(--black-blue);
   background-color: var(--light-gray-blue);
   line-height: 1.6;
