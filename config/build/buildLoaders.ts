@@ -31,23 +31,28 @@ export const buildLoaders = ({
     },
   };
 
-  const cssLoader = {
+  const cssLoader: webpack.RuleSetRule = {
     test: /\.css$/i,
     use: [
       isDev ? "style-loader" : MiniCssExtractPlugin.loader,
       {
         loader: "css-loader",
+        options: {
+          importLoaders: 1,
+        },
       },
+      "postcss-loader",
     ],
   };
 
-  const scssLoader = {
+  const scssLoader: webpack.RuleSetRule = {
     test: /\.s[ac]ss$/i,
     use: [
       isDev ? "style-loader" : MiniCssExtractPlugin.loader,
       {
         loader: "css-loader",
         options: {
+          importLoaders: 2,
           modules: {
             auto: (resPath: string) => Boolean(resPath.includes(".module.")),
             localIdentName: isDev ? "[path][name]__[local]" : "[hash:base64:8]",
@@ -55,11 +60,12 @@ export const buildLoaders = ({
           esModule: false,
         },
       },
+      "postcss-loader",
       "sass-loader",
     ],
   };
 
-  const fontsLoader = {
+  const fontsLoader: webpack.RuleSetRule = {
     test: /\.(woff(2)?|eot|ttf|otf)$/,
     type: "asset/resource",
     generator: {
@@ -67,7 +73,7 @@ export const buildLoaders = ({
     },
   };
 
-  const imagesLoader = {
+  const imagesLoader: webpack.RuleSetRule = {
     test: /\.(png|jpe?g|gif|svg)$/i,
     type: "asset/resource",
     generator: {
