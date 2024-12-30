@@ -3,6 +3,7 @@ export type BuildPaths = {
   entry: string;
   build: string;
   html: string;
+  root: string;
 };
 
 export type BuildOptions = {

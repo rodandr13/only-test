@@ -14,6 +14,7 @@ export const buildWebpackConfig = (
 
   return {
     mode: mode,
+    target: "web",
     entry: paths.entry,
     output: {
       filename: "js/[name].[contenthash].js",
@@ -27,6 +28,8 @@ export const buildWebpackConfig = (
     optimization: {
       minimize: true,
       usedExports: true,
+      moduleIds: "deterministic",
+      concatenateModules: true,
       minimizer: ["...", new CssMinimizerPlugin()],
       splitChunks: {
         chunks: "all",

@@ -6,10 +6,29 @@ import { BuildOptions } from "./types/config";
 export const buildLoaders = ({
   isDev,
 }: BuildOptions): webpack.RuleSetRule[] => {
-  const typeScriptLoader = {
+  const swcLoader: webpack.RuleSetRule = {
     test: /\.tsx?$/,
-    use: "ts-loader",
     exclude: /node_modules/,
+    use: {
+      loader: "swc-loader",
+      options: {
+        jsc: {
+          parser: {
+            syntax: "typescript",
+            tsx: true,
+            decorators: true,
+          },
+          transform: {
+            react: {
+              runtime: "automatic",
+              development: isDev,
+              refresh: isDev,
+            },
+          },
+          target: "es2015",
+        },
+      },
+    },
   };
 
   const cssLoader = {
@@ -55,5 +74,5 @@ export const buildLoaders = ({
       filename: "images/[name][hash][ext]",
     },
   };
-  return [typeScriptLoader, cssLoader, scssLoader, fontsLoader, imagesLoader];
+  return [swcLoader, cssLoader, scssLoader, fontsLoader, imagesLoader];
 };
